@@ -1,10 +1,10 @@
-# Semi-Supervised Autoencoders for Inference
+# Semi-supervised autoencoders (s2ae) for xenon TPCs
 
 This is a proof-of-concept for a semi-supervised autoencoder (AE) which compresses spatial or temporal data with a partially physically interpretable latent space representation. Xenon dual-phase time projection chambers measure light produced from particle interactions using arrays of photosensors. This light data can be represented either spatially or temporally: each photosensor reads out time-series data of waveform signals, and these individual waveforms can be integrated over time in which the total amount of light seen per photosensor in an array is termed a hit pattern. 
 
 This AE was specifically designed to work with ionization signals (commonly referred to as S2 signals in the xenon dual-phase TPC community) which are generated from drifted ionization electrons, since the goal is to simultaneously compress a hit pattern or a given photosensor waveform while simultaneously inferring the number of ionization electrons in the latent space.
 
-The semi-supervised nature of the AE comes from the fact that part of the latent space is supervised, as one value in the latent space vector is constrained through a loss function penalty while the rest of the values are free to evolve unsupervised. The loss function includes two terms, one which penalizes incorrectly inferred numbers of ionization electrons, and another which penalizes incorrectly reconstructed data when comparing the input and output.
+The semi-supervised nature of the AE comes from the fact that part of the latent space is supervised, as several values in the latent space vector are constrained through a loss function penalty while the rest of the values are free to evolve unsupervised. The loss function includes three terms, two of which penalize incorrectly inferred numbers of ionization electrons and (x,y) S2 positions, and a third which penalizes incorrectly reconstructed data when comparing the input and output.
 
 ## Publication
 
@@ -14,15 +14,15 @@ The proceeding established the proof-of-concept:
 > Ivy Li, Aarón Higuera, Shixiao Liang, Juehang Qin, Christopher Tunnell (2024)
 > [EPJ Web of Conferences 295, 09022](https://doi.org/10.1051/epjconf/202429509022) — CHEP 2023
 
-Additional work was conducted after the proceeding for my candidacy report and thesis including model testing on time-series data.
+Additional work was conducted after the proceeding for my thesis including model testing on time-series data and several architectural changes.
 
 ## Status
 
-Code is being refactored from notebooks. Ongoing work.
+Code is being refactored from notebooks.  Ongoing work on the temporal model.
 
 ## Data
 
-The spatial AE takes in a hit pattern of 494 photosensors, but this can be changed as the dimensions of the autoencoder input just needs to match the number of photosensors. This was tested on both normalized and raw data but the AE is able to perform well even when the data is not normalized. The temporal AE takes in 200 samples as XENONnT typically downsamples its longer S2 waveforms such that each S2 signal fits within 200 samples. 
+The spatial AE takes in a hit pattern of 494 photosensors, but this can be changed as the dimensions of the autoencoder input just needs to match the number of photosensors. This was tested on both normalized and raw data. The temporal AE takes in 200 samples as XENONnT typically downsamples its longer S2 waveforms such that each S2 signal fits within 200 samples. 
 
 ## Results and Discussion
 
